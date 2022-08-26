@@ -1,0 +1,141 @@
+.containerNabBar {
+  display: flex;
+  justify-content: space-between;
+  background: #232323 0% 0% no-repeat padding-box;
+  box-shadow: 0px 1px 4px #15223214;
+  width: 100%;
+  height: 10vh;
+ /* position: fixed; */
+}
+.logoNavBar {
+  margin-left: 1rem;
+}
+.secondNavBar {
+  margin-right: 1rem;
+  display: flex;
+  align-items: center;
+  width: 10%;
+  justify-content: space-around;
+}
+.iconAddNavBar {
+  position: relative;
+}
+.plusNavBar {
+  position: absolute;
+  top: 22%;
+  right: 23%;
+}
+.profileNavBar {
+  border-radius: 15px;
+}
+
+.showProfile {
+  display: flex;
+  background-color: #232323;
+  position: absolute;
+  top: 10%;
+  right: 35px;
+  padding: 7px;
+  width: 16%;
+  height: 25vh;
+}
+.picProfile {
+  border-radius: 50%;
+  margin-right: 15px;
+  width: 69px;
+  height: 69px;
+}
+.EmailProfile {
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font: normal normal 300 16px/18px HelveticaNeue;
+}
+.Email_Profile {
+  font: normal normal medium 18px/21px HelveticaNeue;
+  letter-spacing: 0px;
+  color: #b6a3c2;
+}
+.iconLogOut {
+  margin-left: 0.5rem;
+}
+
+/* .box{
+    margin: 100px auto;
+    width: 300px;
+    height: 50px;
+  } */
+
+/* .container-2{
+    width: 100px;
+    vertical-align: middle;
+    white-space: nowrap;
+    position: relative;
+  }
+  
+  .container-2 input#search{
+    width: 50px;
+    height: 50px;
+    background: none;
+    border: none;
+    font-size: 10pt;
+    float: right;
+    color:none;
+    padding-left: 35px;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+    color: #fff;
+   
+    -webkit-transition: width .55s ease;
+    -moz-transition: width .55s ease;
+    -ms-transition: width .55s ease;
+    -o-transition: width .55s ease;
+    transition: width .55s ease;
+  }
+  
+  .container-2 input#search::-webkit-input-placeholder {
+     color: #65737e;
+  }
+   
+  .container-2 input#search:-moz-placeholder {
+     color: #65737e;  
+  }
+   
+  .container-2 input#search::-moz-placeholder { 
+     color: #65737e;  
+  }
+   
+  .container-2 input#search:-ms-input-placeholder {  
+     color: #65737e;  
+  }
+  
+  .container-2 .icon{
+    position: absolute;
+    margin-left: 17px;
+    margin-top: 17px;
+    z-index: 1;
+    color: #4f5b66;
+  }
+  
+  .container-2 input#search:focus, .container-2 input#search:active{
+    outline:none;
+    width: 300px;
+  }
+   
+  .container-2:hover input#search{
+    display: flex;
+    align-items: center;
+  width: 200px;
+  background: red;
+  height: 5vh;
+  margin-left: 17px;
+    margin-top: 17px;
+
+
+  }
+   
+  .container-2:hover .icon{
+    color: #93a2ad;
+  } */

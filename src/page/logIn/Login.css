@@ -1,0 +1,104 @@
+
+.containerLogin{
+display: flex;
+
+    width: 100%;
+    height: 100vh;
+    overflow: hidden;
+}
+.part1LogIn{
+    display: flex;
+ /* justify-content: center; */
+    align-items: center;
+flex-direction: column;
+width: 50%;
+background: #212121 0% 0% no-repeat padding-box;
+/* margin-top: 3rem;
+margin-left: 7rem; */
+justify-content: space-around;
+flex-direction: column;
+
+}
+.Pictures{
+    display: flex;
+    justify-content:space-around;
+    align-items: flex-end;
+    width: 100%;
+    margin-bottom: -3rem;
+
+}
+.idoLogIn{
+    font-size: 100px;
+}
+.iLogIn{
+    color: #6E4B8F;
+}
+.IdoLogo{
+    background-color: #262626;
+    border-radius: 15px;
+    width: 30%;
+    height: 28%;
+    margin-top: 4rem;
+
+}
+.formLogIn{
+    /* border: 1px solid var(--unnamed-color-707070); */
+background: transparent linear-gradient(180deg, #8556A4 0%, #2D2B52 100%) 0% 0% no-repeat padding-box;   
+/* background-color: #e40000; */
+/* border: 1px solid #707070; */
+display: flex;
+/* justify-content: center; */
+   align-items: center;
+flex-direction: column;
+width: 50%;
+/* margin-top: 3rem;
+margin-left: 7rem; */
+justify-content: center;
+flex-direction: column;
+    margin-top: -8rem;
+
+
+}
+.formLogInn{
+    display: flex;
+    flex-direction: column;
+    width: 70%;
+
+}
+.h1FormLogIn{
+    font: normal normal 100 62px/81px HelveticaNeue;
+    color: #FFFFFF;
+
+
+}
+.labelLogIn{
+    text-align: left;
+    margin-top: 0.25rem;
+    margin-bottom: 0.25rem;
+    color: white;
+
+    
+}
+.inputLogIn{
+    margin-bottom: 0.5rem;
+    background: #222222 0% 0% no-repeat padding-box;
+        border: none;
+        border-radius: 5px;
+height: 30px;
+    color: white;
+}
+.btnSignIn{
+    height: 25px;
+    background: var(--unnamed-color-b6a3c2) 0% 0% no-repeat padding-box;
+background: #B6A3C2 0% 0% no-repeat padding-box;
+border: none;
+border-radius: 10px;
+margin-top: 00.5rem;
+
+
+}
+#login-error{
+    color: red;
+    margin-top: 0rem;
+    
+}

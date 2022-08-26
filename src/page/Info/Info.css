@@ -1,0 +1,17 @@
+.containerInfo {
+  background: transparent linear-gradient(180deg, #6e4c85 0%, #2d2b52 100%) 0%
+    0% no-repeat padding-box;
+  display: flex;
+  height: 10vh;
+  align-items: center;
+  color: white;
+  font-size: medium;
+  width: 120%;
+  margin-top: -0.25rem;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+
+}
+.removeInfo {
+  margin-right: 00.5rem;
+}
