@@ -6,26 +6,35 @@ import plus from '../../pic/Add.svg'
 import Bitmap from '../../pic/Bitmap@2x.png'
 import logOut from '../../pic/Icon ionic-ios-log-out.svg'
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 
 
 import "./NavBar.css"
-
+import AddTask from '../AddTask/AddTask'
+import { useDispatch } from 'react-redux'
 function NavBar() {
   const [showProfile, setShowProfile] = useState(false);
+  const [showTask, setShowTask] = useState(false);
+  // const [showFormAddTask, setShowFormAddTask] = useState(false);
+
 
   const openProfile = () => {
     setShowProfile(!showProfile)
     // setShowProfile({ showProfile: false })
   }
+  const handleClose = () => {
+    setShowTask(false);
+  }
 
   const navigate = useNavigate();
 
-const logout = () => {
-  localStorage.removeItem("token");
-  // localStorage.removeItem("superAdmin");
-  navigate('/')
-}
+  const logout = () => {
+    localStorage.removeItem("token");
+    // localStorage.removeItem("superAdmin");
+    navigate('/')
+  }
+
   return (
     <div className='containerNabBar'>
       <img src={logo} width={50} className="logoNavBar" />
@@ -39,10 +48,19 @@ const logout = () => {
         </div> */}
         <img src={search} width={20} />
 
-        <div className='iconAddNavBar'>
+        <div className='iconAddNavBar'
+          onClick={() => setShowTask(true)
+          }
+        >
           <img src={circle} width={20} />
           <img src={plus} width={10} className="plusNavBar" />
         </div>
+        {showTask &&
+          <AddTask
+            showTask={showTask}
+            handleClose={handleClose}
+          />
+        }
         <img src={Bitmap} width={30} className="profileNavBar"
           onClick={openProfile}
         />

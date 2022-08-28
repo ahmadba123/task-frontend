@@ -6,14 +6,21 @@ import Done from '../../pic/DoneIcon.svg'
 import ToDo from '../../pic/ToDoIcon.svg'
 import Card from '../Card/Card'
 import axios from "axios";
-
-
-
+import AddTask from '../AddTask/AddTask'
 import Info from '../Info/Info'
+import { useDispatch, useSelector } from 'react-redux'
+import { addTask, addtasks, setTasks } from "../../features/task/taskSlice";
 function Home(props) {
+
+  const token = localStorage.getItem("token");
+
+
   const [showinfo, setShowinfo] = useState(false);
   const [showinfoIcon, setShowinfoIcon] = useState(true);
-  const [showStatus, setShowStatus] = useState([]);
+  // const [showStatus, setShowStatus] = useState([]);
+  const tasks = useSelector((state) => state.task.value);
+  const dispatch = useDispatch();
+
 
 
   const openInfo = () => {
@@ -35,9 +42,13 @@ function Home(props) {
     try {
 
       await axios
-        .get(`http://localhost:8000/task/user/630889867853fa1eb1e67948`)
+        .get(`http://localhost:8000/task/user`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          }
+        })
         .then((res) => {
-          setShowStatus(res.data.response);
+          dispatch(setTasks(res.data.response));
           console.log(res)
 
 
@@ -71,16 +82,16 @@ function Home(props) {
             <img src={ToDo} width={20} className="statusHome" />
             <p>To Do</p>
           </div>
-          {showStatus.map(task => { if (task.status == "To Do") return (<Card task={task}></Card>) })}
+          {tasks.map(task => { if (task.status == "To Do") return (<Card task={task}></Card>) })}
 
         </div>
         <div className='container_StatustoDo'>
           <div className='container_doing'>
             <img src={Doing} width={20} className="statusHome" />
 
-              <p>Doing</p>
+            <p>Doing</p>
           </div>
-          {showStatus.map(task => { if (task.status == "Doing") return (<Card task={task}></Card>) })}
+          {tasks.map(task => { if (task.status == "Doing") return (<Card task={task}></Card>) })}
         </div>
         <div className='container_StatustoDo'>
           <div className='container_done'>
@@ -89,8 +100,10 @@ function Home(props) {
             <p>Done</p>
 
           </div>
-            {showStatus.map(task => { if (task.status == "Done") return (<Card task={task}></Card>) })}
+          {tasks.map(task => { if (task.status == "Done") return (<Card task={task}></Card>) })}
         </div>
+        {/* <AddTask
+        showStatus={showStatus} /> */}
 
 
       </div>
