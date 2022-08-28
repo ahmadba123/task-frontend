@@ -10,6 +10,8 @@ import AddTask from '../AddTask/AddTask'
 import Info from '../Info/Info'
 import { useDispatch, useSelector } from 'react-redux'
 import { addTask, addtasks, setTasks } from "../../features/task/taskSlice";
+import { setSearchTasks } from "../../features/task/taskSlicecopy";
+
 function Home(props) {
 
   const token = localStorage.getItem("token");
@@ -17,10 +19,12 @@ function Home(props) {
 
   const [showinfo, setShowinfo] = useState(false);
   const [showinfoIcon, setShowinfoIcon] = useState(true);
-  // const [showStatus, setShowStatus] = useState([]);
   const tasks = useSelector((state) => state.task.value);
-  const dispatch = useDispatch();
+  const Searchtask = useSelector((state) => state.Searchtask.value);
 
+
+
+  const dispatch = useDispatch();
 
 
   const openInfo = () => {
@@ -49,7 +53,11 @@ function Home(props) {
         })
         .then((res) => {
           dispatch(setTasks(res.data.response));
-          console.log(res)
+          dispatch(setSearchTasks(res.data.response));
+
+
+          // console.log(res.data.response)
+
 
 
 
@@ -82,7 +90,11 @@ function Home(props) {
             <img src={ToDo} width={20} className="statusHome" />
             <p>To Do</p>
           </div>
-          {tasks.map(task => { if (task.status == "To Do") return (<Card task={task}></Card>) })}
+          {Searchtask.map(task => {
+            if (task.status == "To Do")
+              return (<Card
+                task={task}> </Card>)
+          })}
 
         </div>
         <div className='container_StatustoDo'>
@@ -91,7 +103,7 @@ function Home(props) {
 
             <p>Doing</p>
           </div>
-          {tasks.map(task => { if (task.status == "Doing") return (<Card task={task}></Card>) })}
+          {Searchtask.map(task => { if (task.status == "Doing") return (<Card task={task}></Card>) })}
         </div>
         <div className='container_StatustoDo'>
           <div className='container_done'>
@@ -100,7 +112,7 @@ function Home(props) {
             <p>Done</p>
 
           </div>
-          {tasks.map(task => { if (task.status == "Done") return (<Card task={task}></Card>) })}
+          {Searchtask.map(task => { if (task.status == "Done") return (<Card task={task}></Card>) })}
         </div>
         {/* <AddTask
         showStatus={showStatus} /> */}

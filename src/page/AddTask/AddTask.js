@@ -57,24 +57,7 @@ function AddTask(props) {
         // props.addNewDoctor(value)
         props.handleClose();
     }
-    // const getAlltaskById = async (item) => {
-    //     console.log(item);
-    //     try {
-
-    //       await axios
-    //         .get(`http://localhost:8000/task/user/630889867853fa1eb1e67948`)
-    //         .then((res) => {
-    //           dispatch(setTasks(res.data.response));
-    //           console.log(res)
-
-
-
-    //         })
-    //         .catch((err) => console.log(err));
-    //     } catch (e) {
-    //       console.log(e);
-    //     }
-    //   };
+  
     const getAllDatacategory = async () => {
 
         try {
@@ -83,7 +66,7 @@ function AddTask(props) {
                 .get(`http://localhost:8000/categories`)
                 .then((res) => {
                     setCategory(res.data.response);
-                    console.log(res.data)
+                    // console.log(res.data)
 
 
 

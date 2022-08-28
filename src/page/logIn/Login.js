@@ -17,15 +17,12 @@ function Login() {
   // login
   const login = async (e) => {
     e.preventDefault();
-    // setLoading(true)
     var admin = { email, password }
     axios.post(`http://localhost:8000/users/signin`, admin)
       .then(async res => {
         // console.log("token", res.data.Token)
 
-        // setLoading(false);
         localStorage.setItem("token", res.data.Token);
-        // window.location.reload();
         navigate("/home")
       })
       .catch((error) => {
@@ -79,7 +76,6 @@ function Login() {
 
           ></input>
           {error && <p id="login-error">
-            {/* {errorr} */}
             Incorrect username or password! Please try again
           </p>}
 

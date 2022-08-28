@@ -3,7 +3,7 @@ import "./Card.css"
 function Card({ task }) {
     return (
         <div className='containerCrads' >
-            <p className='cradH2'>{task.title}</p>
+            <div className='cradH2'>{task.title}</div>
             <table className='containerCrad'>
                 <tr className='titleCrad'>
 
@@ -21,21 +21,6 @@ function Card({ task }) {
                 </tr>
             </table>
 
-
-            {/* <div className='titleCrad'>
-                <h2></h2>
-                <p>category</p>
-                <p>due Date</p>
-                <p>estmate</p>
-                <p>importance</p>
-            </div>
-            <div className='valueCrad'>
-                <p>category</p>
-                <p>due Date</p>
-                <p>estmate</p>
-                <p>importance</p>
-
-            </div> */}
 
         </div>
     )
