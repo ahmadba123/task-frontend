@@ -13,28 +13,29 @@ import "./AddTask.css"
 import { useDispatch } from 'react-redux';
 import { addTask } from '../../features/task/taskSlice';
 import axios from "axios";
-import { setTasks } from "../../features/task/taskSlice";
-
-const token = localStorage.getItem("token");
-
 function AddTask(props) {
+    const token = localStorage.getItem("token");
     const [value, setValue] = useState({})
     const [category, setCategory] = useState([])
-    const [user, setUser] = useState([])
+    const [showCategories, setShowCategories] = useState(false)
 
+    const [categ, setCateg] = useState({})
 
     const dispatch = useDispatch();
 
+    const openAddCategory = () => {
+        setShowCategories(true)
+    }
+
     const handleChange = (event) => {
         setValue({ ...value, [event.target.name]: event.target.value })
+    }
+    const handleCategoryChange = (e) => {
 
     }
     useEffect(() => {
         getAllDatacategory();
-        getAllDataUser();
-        // getAlltaskById();
     }, []);
-    // console.log()
     const handleSubmit = async (event) => {
         let data = value;
         await axios
@@ -46,18 +47,22 @@ function AddTask(props) {
                 }
             )
             .then((res) => {
-                console.log(res.data.response);
+                // console.log(res.data.response);
                 dispatch(addTask(res.data.response));
-
+                window.location.reload();
+                const catego = {
+                    name: categ
+                }
+                setCategory(category => [...category, catego])
             })
             .catch((err) => console.log(err));
-
-
         event.preventDefault();
-        // props.addNewDoctor(value)
         props.handleClose();
     }
-  
+
+    const handleCloseCategory = () => {
+        setShowCategories(false);
+    }
     const getAllDatacategory = async () => {
 
         try {
@@ -66,39 +71,36 @@ function AddTask(props) {
                 .get(`http://localhost:8000/categories`)
                 .then((res) => {
                     setCategory(res.data.response);
-                    // console.log(res.data)
-
-
-
+                    // console.log(res.data.response)
                 })
                 .catch((err) => console.log(err));
         } catch (e) {
             console.log(e);
         }
     };
-    const getAllDataUser = async () => {
+    const handleSubmitCategory = async (event) => {
+        let data = value;
+        await axios
+            .post(`http://localhost:8000/categories`, data,
+                {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    }
+                }
+            )
+            .then((res) => {
 
-        try {
+                getAllDatacategory()
+            })
+            .catch((err) => console.log(err));
+        event.preventDefault();
+        handleCloseCategory();
+    }
 
-            await axios
-                .get(`http://localhost:8000/users`)
-                .then((res) => {
-                    setUser(res.data.response);
-                    console.log(res.data)
-
-
-
-                })
-                .catch((err) => console.log(err));
-        } catch (e) {
-            console.log(e);
-        }
-    };
     return (
         <div className="addDriver-container">
             <form method="POST">
                 <Dialog
-                    // TransitionComponent={props.Transition}
                     open={props.showTask}
                     onClose={props.handleClose}
                 >
@@ -116,8 +118,6 @@ function AddTask(props) {
                             variant="standard"
                             name='title'
                         />
-
-
                         <TextField
                             required
                             autoFocus
@@ -130,7 +130,6 @@ function AddTask(props) {
                             variant="standard"
                             InputProps={{ inputProps: { min: 10000000, max: 99999999 } }}
                             name='dueDate'
-
                         />
                         <TextField
                             required
@@ -147,7 +146,6 @@ function AddTask(props) {
                         <FormControl fullWidth
                             margin="dense"
                         >
-
                             <InputLabel id="demo-simple-select-label">categories</InputLabel>
                             <Select
                                 required
@@ -156,25 +154,50 @@ function AddTask(props) {
                                 // id="category_id.name"
                                 labelId="demo-simple-select-label"
                                 variant="standard"
-
-                                label="domain"
+                                label="category"
                                 onChange={handleChange}
                                 name='category_id'
                                 className='inputVisit'
-                                
-
                             >
-                                <MenuItem selected="To Do"></MenuItem>
+                                <MenuItem onClick={openAddCategory}>
+                                    {showCategories && <Dialog
+                                        open={showCategories}
+                                        onClose={handleCloseCategory}
+                                    >
+                                        <DialogTitle>Add new category</DialogTitle>
+                                        <DialogContent>
+                                            <TextField
+                                                value={categ.name}
+                                                required
+                                                autoFocus
+                                                margin="dense"
+                                                id="name"
+                                                label="standard"
+                                                onChange={handleChange}
+                                                type="name"
+                                                fullWidth
+                                                variant="standard"
+                                                name="name" />
+                                        </DialogContent>
+                                        <DialogActions>
+                                            <Button type="submit"
+                                                onClick={handleSubmitCategory}
+                                            >Save</Button>
+                                            <Button onClick={handleCloseCategory}>Cancel</Button>
+                                        </DialogActions>
+                                    </Dialog>
+                                    }
+                                    <span className='add_new_category'>add new category</span>
+                                </MenuItem>
                                 {category.map(categories => {
                                     return <MenuItem value={categories._id}>{categories.name}</MenuItem>
                                 })}
+
                             </Select>
                         </FormControl>
-
                         <FormControl fullWidth
                             margin="dense"
                         >
-
                             <InputLabel id="demo-simple-select-label">importance</InputLabel>
                             <Select
                                 required
@@ -183,54 +206,20 @@ function AddTask(props) {
                                 id="importance"
                                 labelId="demo-simple-select-label"
                                 variant="standard"
-
                                 label="importance"
                                 onChange={handleChange}
                                 name='importance'
                                 className='inputVisit'
-
                             >
                                 <MenuItem value="medium">medium</MenuItem>
                                 <MenuItem value="low">low</MenuItem>
-                                <MenuItem value="large">large</MenuItem>
-
-
-
+                                <MenuItem value="high">high</MenuItem>
+                                <MenuItem value="null">null</MenuItem>
                             </Select>
                         </FormControl>
-                        {/* <FormControl fullWidth
-                            margin="dense"
-                        >
-
-                            <InputLabel id="demo-simple-select-label">user</InputLabel>
-                            <Select
-                                required
-                                autoFocus
-                                margin="dense"
-                                id="user_id"
-                                labelId="demo-simple-select-label"
-                                variant="standard"
-
-                                label="importance"
-                                onChange={handleChange}
-                                name='user_id'
-                                className='inputVisit'
-
-                            >
-                                <MenuItem></MenuItem>
-                                {user.map(users => {
-                                    return <MenuItem value={users._id}>{users.email}</MenuItem>
-                                })}
-
-
-
-                            </Select>
-                        </FormControl> */}
-
                         <FormControl fullWidth
                             margin="dense"
                         >
-
                             <InputLabel id="demo-simple-select-label">status</InputLabel>
                             <Select
                                 required
@@ -244,23 +233,16 @@ function AddTask(props) {
                                 onChange={handleChange}
                                 name='status'
                                 className='inputVisit'
-
                             >
                                 <MenuItem value="Doing">Doing</MenuItem>
                                 <MenuItem value="To Do">To Do</MenuItem>
                                 <MenuItem value="Done">Done</MenuItem>
-
-
-
                             </Select>
                         </FormControl>
-
                     </DialogContent>
-
                     <DialogActions>
                         <Button type="submit"
-                            onClick={handleSubmit}
-                        >Save</Button>
+                            onClick={handleSubmit}>Save</Button>
                         <Button onClick={props.handleClose}>Cancel</Button>
                     </DialogActions>
                 </Dialog>

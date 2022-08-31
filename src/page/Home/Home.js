@@ -11,6 +11,7 @@ import Info from '../Info/Info'
 import { useDispatch, useSelector } from 'react-redux'
 import { addTask, addtasks, setTasks } from "../../features/task/taskSlice";
 import { setSearchTasks } from "../../features/task/taskSlicecopy";
+import DragList from '../../Drak drop/DragList'
 
 function Home(props) {
 
@@ -19,7 +20,6 @@ function Home(props) {
 
   const [showinfo, setShowinfo] = useState(false);
   const [showinfoIcon, setShowinfoIcon] = useState(true);
-  const tasks = useSelector((state) => state.task.value);
   const Searchtask = useSelector((state) => state.Searchtask.value);
 
 
@@ -55,7 +55,6 @@ function Home(props) {
           dispatch(setTasks(res.data.response));
           dispatch(setSearchTasks(res.data.response));
 
-
           // console.log(res.data.response)
 
 
@@ -84,41 +83,40 @@ function Home(props) {
 
 
       </div>
-      <div className='container_tasks'>
-        <div className='container_StatustoDo'>
-          <div className='container_toDo'>
-            <img src={ToDo} width={20} className="statusHome" />
-            <p>To Do</p>
-          </div>
-          {Searchtask.map(task => {
-            if (task.status == "To Do")
-              return (<Card
-                task={task}> </Card>)
-          })}
-
-        </div>
-        <div className='container_StatustoDo'>
-          <div className='container_doing'>
-            <img src={Doing} width={20} className="statusHome" />
-
-            <p>Doing</p>
-          </div>
-          {Searchtask.map(task => { if (task.status == "Doing") return (<Card task={task}></Card>) })}
-        </div>
-        <div className='container_StatustoDo'>
-          <div className='container_done'>
-            <img src={Done} width={20} className="statusHome" />
-
-            <p>Done</p>
+      <DragList />
+      {/* <div className='container_tasks'>
+    
+          <div className='container_StatustoDo'>
+            <div className='container_toDo'>
+              <img src={ToDo} width={20} className="statusHome" />
+              <p>To Do</p>
+            </div>
+            {Searchtask.map(task => {
+              if (task.status == "To Do")
+                return (<Card
+                  task={task}> </Card>)
+            })}
 
           </div>
-          {Searchtask.map(task => { if (task.status == "Done") return (<Card task={task}></Card>) })}
-        </div>
-        {/* <AddTask
-        showStatus={showStatus} /> */}
+          <div className='container_StatustoDo'>
+            <div className='container_doing'>
+              <img src={Doing} width={20} className="statusHome" />
 
+              <p>Doing</p>
+            </div>
+            {Searchtask.map(task => { if (task.status == "Doing") return (<Card task={task}></Card>) })}
+          </div>
+          <div className='container_StatustoDo'>
+            <div className='container_done'>
+              <img src={Done} width={20} className="statusHome" />
 
-      </div>
+              <p>Done</p>
+
+            </div>
+            {Searchtask.map(task => { if (task.status == "Done") return (<Card task={task}></Card>) })}
+          </div>
+         
+      </div>  */}
 
 
     </div>
