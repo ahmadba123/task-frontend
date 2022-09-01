@@ -9,7 +9,6 @@ import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
-import "./AddTask.css"
 import { useDispatch } from 'react-redux';
 import { addTask } from '../../features/task/taskSlice';
 import axios from "axios";
@@ -20,18 +19,10 @@ function AddTask(props) {
     const [showCategories, setShowCategories] = useState(false)
 
     const [categ, setCateg] = useState({})
-
     const dispatch = useDispatch();
-
-    const openAddCategory = () => {
-        setShowCategories(true)
-    }
-
+    // form add task
     const handleChange = (event) => {
         setValue({ ...value, [event.target.name]: event.target.value })
-    }
-    const handleCategoryChange = (e) => {
-
     }
     useEffect(() => {
         getAllDatacategory();
@@ -59,16 +50,24 @@ function AddTask(props) {
         event.preventDefault();
         props.handleClose();
     }
-
+    // form add category   
+    const openAddCategory = () => {
+        setShowCategories(true)
+    }
     const handleCloseCategory = () => {
         setShowCategories(false);
     }
     const getAllDatacategory = async () => {
-
         try {
-
             await axios
-                .get(`http://localhost:8000/categories`)
+                .get(`http://localhost:8000/categories`,
+                    {
+                        headers: {
+                            Authorization: `Bearer ${token}`,
+                        }
+                    }
+                )
+
                 .then((res) => {
                     setCategory(res.data.response);
                     // console.log(res.data.response)
@@ -96,7 +95,6 @@ function AddTask(props) {
         event.preventDefault();
         handleCloseCategory();
     }
-
     return (
         <div className="addDriver-container">
             <form method="POST">
@@ -118,31 +116,6 @@ function AddTask(props) {
                             variant="standard"
                             name='title'
                         />
-                        <TextField
-                            required
-                            autoFocus
-                            margin="dense"
-                            id="dueDate"
-                            label=""
-                            onChange={handleChange}
-                            type="date"
-                            fullWidth
-                            variant="standard"
-                            InputProps={{ inputProps: { min: 10000000, max: 99999999 } }}
-                            name='dueDate'
-                        />
-                        <TextField
-                            required
-                            autoFocus
-                            margin="dense"
-                            id="estimate"
-                            label="standard"
-                            onChange={handleChange}
-                            type="name"
-                            fullWidth
-                            variant="standard"
-                            name='estimate'
-                        />
                         <FormControl fullWidth
                             margin="dense"
                         >
@@ -151,7 +124,6 @@ function AddTask(props) {
                                 required
                                 autoFocus
                                 margin="dense"
-                                // id="category_id.name"
                                 labelId="demo-simple-select-label"
                                 variant="standard"
                                 label="category"
@@ -181,20 +153,45 @@ function AddTask(props) {
                                         </DialogContent>
                                         <DialogActions>
                                             <Button type="submit"
-                                                onClick={handleSubmitCategory}
-                                            >Save</Button>
+                                                onClick={handleSubmitCategory} >Save</Button>
                                             <Button onClick={handleCloseCategory}>Cancel</Button>
                                         </DialogActions>
                                     </Dialog>
                                     }
-                                    <span className='add_new_category'>add new category</span>
+                                    <div className='add_new_category'>add new category</div>
                                 </MenuItem>
+
                                 {category.map(categories => {
                                     return <MenuItem value={categories._id}>{categories.name}</MenuItem>
                                 })}
-
                             </Select>
                         </FormControl>
+                        <TextField
+                            required
+                            autoFocus
+                            margin="dense"
+                            id="dueDate"
+                            label=""
+                            onChange={handleChange}
+                            type="date"
+                            fullWidth
+                            variant="standard"
+                            InputProps={{ inputProps: { min: 10000000, max: 99999999 } }}
+                            name='dueDate'
+                        />
+                        <TextField
+                            required
+                            autoFocus
+                            margin="dense"
+                            id="estimate"
+                            label="standard"
+                            onChange={handleChange}
+                            type="name"
+                            fullWidth
+                            variant="standard"
+                            name='estimate'
+                        />
+
                         <FormControl fullWidth
                             margin="dense"
                         >
@@ -211,13 +208,13 @@ function AddTask(props) {
                                 name='importance'
                                 className='inputVisit'
                             >
-                                <MenuItem value="medium">medium</MenuItem>
-                                <MenuItem value="low">low</MenuItem>
-                                <MenuItem value="high">high</MenuItem>
                                 <MenuItem value="null">null</MenuItem>
+                                <MenuItem value="low">low</MenuItem>
+                                <MenuItem value="medium">medium</MenuItem>
+                                <MenuItem value="high">high</MenuItem>
                             </Select>
                         </FormControl>
-                        <FormControl fullWidth
+                        {/* <FormControl fullWidth
                             margin="dense"
                         >
                             <InputLabel id="demo-simple-select-label">status</InputLabel>
@@ -234,11 +231,11 @@ function AddTask(props) {
                                 name='status'
                                 className='inputVisit'
                             >
-                                <MenuItem value="Doing">Doing</MenuItem>
                                 <MenuItem value="To Do">To Do</MenuItem>
+                                <MenuItem value="Doing">Doing</MenuItem>
                                 <MenuItem value="Done">Done</MenuItem>
                             </Select>
-                        </FormControl>
+                        </FormControl> */}
                     </DialogContent>
                     <DialogActions>
                         <Button type="submit"

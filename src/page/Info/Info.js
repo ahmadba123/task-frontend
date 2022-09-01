@@ -6,7 +6,7 @@ function Info(props) {
   return (
     <div className='containerInfo'>
       <span>"Anything that can go wrong, will go wrong!"</span>
-      <img src={remove} width={15} className="removeInfo"
+      <img src={remove} alt="remove" width={15} className="removeInfo"
         onClick={props.handleClose}
       />
 

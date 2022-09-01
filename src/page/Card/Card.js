@@ -1,10 +1,6 @@
 import React from 'react'
 import "./Card.css"
-import { useDispatch, useSelector } from 'react-redux'
-
 function Card({ task }) {
-    const tasks = useSelector((state) => state.task.value);
-
     return (
         <div className='containerCrads' >
             <div className='cradH2'>{task.title}</div>
@@ -15,7 +11,6 @@ function Card({ task }) {
                     <td className='tdTitleCrad'>due Date</td>
                     <td className='tdTitleCrad'>estimate</td>
                     <td className='tdTitleCrad'>importance</td>
-
                 </tr>
                 <tr className='valueCrad'>
                     <td>{task.category_id?.name || ""}</td>
@@ -28,10 +23,7 @@ function Card({ task }) {
                     </td>
                 </tr>
             </table>
-
-
         </div>
     )
 }
-
 export default Card

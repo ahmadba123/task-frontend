@@ -2,61 +2,50 @@ import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { DragDropContext } from "react-beautiful-dnd";
 import DraggableElement from "./DraggableElement";
-import { useDispatch, useSelector } from 'react-redux'
+import {  useSelector } from 'react-redux'
 import axios from "axios";
-
-
+import AddTaskCard from "../page/AddTask/AddTaskCard";
 const DragDropContextContainer = styled.div`
   padding-left: 20px;
   border: none;
   border-radius: 6px;
   width:80%
 `;
-
 const ListGrid = styled.div`
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   grid-gap: 8px;
 `;
-
-// fake data generator
-const getItems = (tasks, prefix) => {
-
-  const filteredTasks = tasks.filter(task => task.status === prefix)
-  return filteredTasks;
-  // filteredTasks.map(task => task)
-}
-
-// Array.from({ length: count }, (v, k) => k).map((k) => {
-//   const randomId = Math.floor(Math.random() * 1000);
-//   return {
-//     id: `item-${randomId}`,
-//     prefix,
-//     content: `item ${randomId}`
-//   };
-// });
-
+// drag card 
 const removeFromList = (list, index) => {
   const result = Array.from(list);
   const [removed] = result.splice(index, 1);
   return [removed, result];
 };
-
+// drag drop 
 const addToList = (list, index, element) => {
   const result = Array.from(list);
   result.splice(index, 0, element);
   return result;
 };
-
+// status type
 const lists = ["To Do", "Doing", "Done"];
-
-const generateLists = (tasks) => ({ "To Do": getItems(tasks, "To Do"), "Doing": getItems(tasks, "Doing"), "Done": getItems(tasks, "Done") })
-
-function DragList() {
-  const token = localStorage.getItem("token");
-
+const generateLists = (tasks) =>
+({
+  "To Do": getItems(tasks, "To Do"),
+  "Doing": getItems(tasks, "Doing"),
+  "Done": getItems(tasks, "Done")
+})
+// filter card by status
+const getItems = (tasks, prefix) => {
+  const filteredTasks = tasks.filter(task => task.status === prefix)
+  return filteredTasks;
+}
+function DragList(props) {
   const Searchtask = useSelector((state) => state.Searchtask.value);
   const [elements, setElements] = useState(generateLists(Searchtask));
+  const token = localStorage.getItem("token");
+
 
   useEffect(() => {
     setElements(generateLists(Searchtask));
@@ -67,30 +56,27 @@ function DragList() {
       return;
     }
     const listCopy = { ...elements };
-    // console.log(elements)
-
-    // console.log(listCopy)
-    // console.log(result)
-
     const sourceList = listCopy[result.source.droppableId];
-    const [removedElement, newSourceList] = removeFromList(
-      sourceList,
-      result.source.index
-    );
+    const [removedElement, newSourceList] =
+      removeFromList(
+        sourceList,
+        result.source.index
+      );
 
     listCopy[result.source.droppableId] = newSourceList;
     const destinationList = listCopy[result.destination.droppableId];
-    listCopy[result.destination.droppableId] = addToList(
-      destinationList,
-      result.destination.index,
-      removedElement
-    );
-
+    listCopy[result.destination.droppableId] =
+      addToList(
+        destinationList,
+        result.destination.index,
+        removedElement
+      );
     setElements(listCopy);
-
+    // update status  in drak and drop
     try {
       await axios
-        .put(`http://localhost:8000/task/${result.draggableId}`, { status: result.destination.droppableId }, {
+        .put(`http://localhost:8000/task/${result.draggableId}`,
+          { status: result.destination.droppableId }, {
           headers: {
             Authorization: `Bearer ${token}`,
           }
@@ -106,29 +92,25 @@ function DragList() {
   };
 
   return (
+    
     <DragDropContextContainer>
       <DragDropContext onDragEnd={onDragEnd}>
         <ListGrid>
           {lists.map((listKey) => {
-            return (<DraggableElement
+            return (
+              <>
+              <DraggableElement
               elements={elements[listKey]}
               key={listKey}
               prefix={listKey}
+              getAlltaskById={props.getAlltaskById}
             />
+            
+            </>
             )
-          })}
-          {/* <div className='container_toDo'>
-              <img src={ToDo} width={20} className="statusHome" />
-              <p>To Do</p>
-            </div>
-            {Searchtask.map(task => {
-              if (task.status == "To Do")
-                return ( <DraggableElement
-              // elements={elements[listKey]}
-              // key={listKey}
-              // prefix={listKey}
-            />)
-            })} */}
+          }
+          
+          )}
         </ListGrid>
       </DragDropContext>
     </DragDropContextContainer>

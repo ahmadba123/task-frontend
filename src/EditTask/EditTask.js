@@ -6,7 +6,10 @@ const EditableInput = (props) => {
   const inputRef = useRef(null);
   const [inputVisible, setInputVisible] = useState(false);
   const [text, setText] = useState(props.text);
-
+  console.log(text)
+  const token = localStorage.getItem("token");
+  var selectTag = document.querySelector("select");
+  var selectedOption = selectTag?.options[selectTag.selectedIndex]?.innerHTML;
   function onClickOutSide(e) {
     // Check if user is clicking outside of <input>
     if (inputRef.current && !inputRef.current.contains(e.target)) {
@@ -16,8 +19,17 @@ const EditableInput = (props) => {
       data.append(props.label, text);
 
       axios
-        .put(${backendApi}${props.api}/${props.id}, data)
-        .then((res) => console.log(res))
+        .put(`http://localhost:8000/task/${props.id}`, data, {
+          headers: {
+            Authorization: `Bearer ${token}`
+          },
+        })
+
+        .then((res) => {
+          // window.location.reload();
+          console.log(res)
+
+        })
         .catch((err) => console.error(err));
     }
   }
@@ -36,18 +48,39 @@ const EditableInput = (props) => {
   return (
     <React.Fragment>
       {inputVisible ? (
-        <input
-          id={"photo"}
-          style={style}
-          ref={inputRef} // Set the Ref
-          value={text} // Now input value uses local state
-          type={props.type}
-          onChange={(e) => {
-            setText(e.target.value);
-          }}
-        />
+        <>
+          {!props.select ?
+            <input
+              ref={inputRef} // Set the Ref
+              value={text} // Now input value uses local state
+              type={props.type}
+              onChange={(e) => {
+                setText(e.target.value);
+
+              }}
+            />
+            :
+
+            <select
+              // select importance
+
+              ref={inputRef} // Set the Ref
+              onClick={(e) => {
+                setText(e.target.value);
+
+              }}
+            // Now input value uses local state
+            >
+              <option></option>
+              <option value="low" >low</option>
+              <option value="medium">medium</option>
+              <option value="high">high</option>
+              <option value="null">null</option>
+            </select>
+          }
+        </>
       ) : (
-        <span onClick={() => setInputVisible(true)}>{text}</span>
+        <span onClick={() => setInputVisible(true)}>{!props.select ? text : selectedOption || text}</span>
       )}
     </React.Fragment>
   );

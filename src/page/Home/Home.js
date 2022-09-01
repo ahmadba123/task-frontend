@@ -1,38 +1,23 @@
 import React, { useState, useEffect, } from 'react'
 import "./Home.css"
 import info from '../../pic/ShowQuote.svg'
-import Doing from '../../pic/DoingIcon.svg'
-import Done from '../../pic/DoneIcon.svg'
-import ToDo from '../../pic/ToDoIcon.svg'
 import Card from '../Card/Card'
 import axios from "axios";
-import AddTask from '../AddTask/AddTask'
 import Info from '../Info/Info'
-import { useDispatch, useSelector } from 'react-redux'
-import { addTask, addtasks, setTasks } from "../../features/task/taskSlice";
-import { setSearchTasks } from "../../features/task/taskSlicecopy";
+import { useDispatch } from 'react-redux'
+import {  setTasks } from "../../features/task/taskSlice";
+import { setSearchTasks } from "../../features/task/taskSliceSearchTask.js";
 import DragList from '../../Drak drop/DragList'
-
-function Home(props) {
-
+import AddTaskCard from '../AddTask/AddTaskCard';
+function Home() {
   const token = localStorage.getItem("token");
-
-
   const [showinfo, setShowinfo] = useState(false);
   const [showinfoIcon, setShowinfoIcon] = useState(true);
-  const Searchtask = useSelector((state) => state.Searchtask.value);
-
-
-
   const dispatch = useDispatch();
-
-
   const openInfo = () => {
     setShowinfo({ showinfo: true })
     setShowinfoIcon(false);
-
   }
-
   const handleClose = () => {
     setShowinfo(false);
     setShowinfoIcon(true);
@@ -54,71 +39,34 @@ function Home(props) {
         .then((res) => {
           dispatch(setTasks(res.data.response));
           dispatch(setSearchTasks(res.data.response));
-
           // console.log(res.data.response)
-
-
-
-
-        })
+        }
+        )
         .catch((err) => console.log(err));
     } catch (e) {
       console.log(e);
     }
   };
 
+
   return (
     <div className='containerHome'>
       <div className="infoHome">
         {showinfoIcon &&
-          <img src={info} width={20} className="infoIconHome"
+          <img src={info} alt="info" width={20} className="infoIconHome"
             onClick={openInfo}
           />}
-
         {showinfo && <Info
-
           handleClose={handleClose}
         />}
-
-
-
       </div>
-      <DragList />
-      {/* <div className='container_tasks'>
-    
-          <div className='container_StatustoDo'>
-            <div className='container_toDo'>
-              <img src={ToDo} width={20} className="statusHome" />
-              <p>To Do</p>
-            </div>
-            {Searchtask.map(task => {
-              if (task.status == "To Do")
-                return (<Card
-                  task={task}> </Card>)
-            })}
-
-          </div>
-          <div className='container_StatustoDo'>
-            <div className='container_doing'>
-              <img src={Doing} width={20} className="statusHome" />
-
-              <p>Doing</p>
-            </div>
-            {Searchtask.map(task => { if (task.status == "Doing") return (<Card task={task}></Card>) })}
-          </div>
-          <div className='container_StatustoDo'>
-            <div className='container_done'>
-              <img src={Done} width={20} className="statusHome" />
-
-              <p>Done</p>
-
-            </div>
-            {Searchtask.map(task => { if (task.status == "Done") return (<Card task={task}></Card>) })}
-          </div>
-         
-      </div>  */}
-
-
+      <div className='tasksCrad'>
+      {/* <AddTaskCard /> */}
+          
+      <DragList
+      getAlltaskById={getAlltaskById}
+       />
+      </div>
     </div>
   )
 }

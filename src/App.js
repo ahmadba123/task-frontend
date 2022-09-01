@@ -10,32 +10,23 @@ function App() {
     <div className="App">
       <BrowserRouter>
         <Routes>
-
           <Route path="/" element={<Login />} />
           {
             localStorage.getItem("token") !== null ?
-              <Route element={(
-                <>
-                  <Layout />
-                </>
-              )}>
-
-
+              <Route element=
+                {(
+                  <>
+                    <Layout />
+                  </>
+                )}>
                 <Route path="/home" element={<Home />} />
-
-
-
-
               </Route>
-
               :
               <Route path="*" element={<Login />} />
           }
-
         </Routes>
       </BrowserRouter>
     </div>
   );
 }
-
 export default App;

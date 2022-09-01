@@ -8,7 +8,7 @@ import logOut from '../../pic/Icon ionic-ios-log-out.svg'
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useDispatch, useSelector } from 'react-redux'
-import { setSearchTasks } from "../../features/task/taskSlicecopy";
+import { setSearchTasks } from "../../features/task/taskSliceSearchTask.js";
 
 import "./NavBar.css"
 import AddTask from '../AddTask/AddTask'
@@ -76,7 +76,7 @@ function NavBar() {
 
   return (
     <div className='containerNabBar'>
-      <img src={logo} width={50} className="logoNavBar" />
+      <img src={logo} alt="logo" width={50} className="logoNavBar" />
       <div className='secondNavBar'>
         <div className='searchDiv'>
           <input type="text" placeholder="what are you looking for?" name="search" className='inputSearch'
@@ -92,8 +92,8 @@ function NavBar() {
           onClick={() => setShowTask(true)
           }
         >
-          <img src={circle} width={20} />
-          <img src={plus} width={10} className="plusNavBar" />
+          <img src={circle} alt="circle" width={20} />
+          <img src={plus} alt="plus" width={10} className="plusNavBar" />
         </div>
         {showTask &&
           <AddTask
@@ -101,13 +101,13 @@ function NavBar() {
             handleClose={handleClose}
           />
         }
-        <img src={Bitmap} width={30} className="profileNavBar"
+        <img src={Bitmap} alt="Bitmap" width={30} className="profileNavBar"
           onClick={openProfile}
         />
         {showProfile &&
 
           <div className='showProfile'>
-            <img src={Bitmap} className='picProfile' />
+            <img src={Bitmap} alt="Bitmap" className='picProfile' />
             <div className='email_logout'>
               <p className='Email_Profile'>
                 <p > {task.user_id?.email || ""}</p>
@@ -119,11 +119,7 @@ function NavBar() {
             </div>
           </div>
         }
-
       </div>
-
-
-
     </div>
   )
 }
