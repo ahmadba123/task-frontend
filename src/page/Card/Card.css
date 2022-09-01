@@ -95,3 +95,8 @@ td {
   background-color: #e2e8ed;
   width: 100%;
 }
+@media screen and (max-width: 1023px) {
+  .hUHfiT{
+    grid-template-columns: 1fr !important;
+  }
+}
