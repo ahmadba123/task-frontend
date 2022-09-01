@@ -1,6 +1,4 @@
 import { Draggable } from "react-beautiful-dnd";
-// import { LoremIpsum } from "lorem-ipsum";
-// import { generateFromString } from "generate-avatar";
 import React, { useMemo } from "react";
 import styled, { css } from "styled-components";
 import { useDispatch, useSelector } from 'react-redux'
